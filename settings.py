@@ -21,3 +21,11 @@ class Settings:
 
         # Cài đặt Tàu
         self.ship_speed = 1.5
+
+        # --- THÊM ĐOẠN NÀY ---
+        # Cài đặt Đạn
+        self.bullet_speed = 2.0  # Tốc độ đạn (nhanh hơn tàu chút)
+        self.bullet_width = 3
+        self.bullet_height = 15
+        self.bullet_color = (60, 60, 60)  # Màu xám đậm
+        self.bullets_allowed = 3  # Giới hạn số đạn trên màn hình (để không spam nút bắn)

@@ -1,7 +1,9 @@
 import sys
 import pygame
 from settings import Settings
-from sprites.ship import Ship  # Import từ thư mục sprites
+from sprites.ship import Ship
+from sprites.bullet import Bullet  # <--- MỚI: Import đạn
+
 
 class AlienInvasion:
     """Class chính quản lý game"""
@@ -10,23 +12,22 @@ class AlienInvasion:
         pygame.init()
         self.settings = Settings()
 
-        # Thiết lập màn hình
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion Ultimate")
 
-        # Tạo con tàu
         self.ship = Ship(self)
+        self.bullets = pygame.sprite.Group()  # <--- MỚI: Tạo nhóm chứa các viên đạn
 
     def run_game(self):
         """Vòng lặp chính của game"""
         while True:
             self._check_events()
             self.ship.update()
+            self._update_bullets()  # <--- MỚI: Hàm riêng để cập nhật đạn
             self._update_screen()
 
     def _check_events(self):
-        """Xử lý sự kiện bàn phím và chuột"""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -42,6 +43,8 @@ class AlienInvasion:
             self.ship.moving_left = True
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_SPACE:  # <--- MỚI: Nhấn Space để bắn
+            self._fire_bullet()
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
@@ -49,14 +52,36 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
 
+    def _fire_bullet(self):  # <--- MỚI: Logic bắn đạn
+        """Tạo viên đạn mới và thêm vào nhóm bullets"""
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+
+    def _update_bullets(self):  # <--- MỚI: Cập nhật vị trí và xóa đạn cũ
+        """Cập nhật vị trí đạn và xóa đạn cũ"""
+        self.bullets.update()
+
+        # Xóa đạn đã biến mất khỏi màn hình
+        # (Phải dùng copy() vì không thể vừa lặp vừa xóa phần tử trong list/group)
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+
+        # In ra số lượng đạn để debug (xóa dòng này sau khi test xong)
+        # print(len(self.bullets))
+
     def _update_screen(self):
-        """Vẽ lại màn hình"""
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
+
+        # <--- MỚI: Vẽ tất cả các viên đạn
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
+
         pygame.display.flip()
 
 
 if __name__ == '__main__':
-    # Tạo và chạy game
     ai = AlienInvasion()
     ai.run_game()
