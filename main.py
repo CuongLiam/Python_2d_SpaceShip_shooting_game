@@ -65,18 +65,34 @@ class AlienInvasion:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
 
-    def _update_bullets(self):  # <--- MỚI: Cập nhật vị trí và xóa đạn cũ
+    def _update_bullets(self):
         """Cập nhật vị trí đạn và xóa đạn cũ"""
         self.bullets.update()
 
         # Xóa đạn đã biến mất khỏi màn hình
-        # (Phải dùng copy() vì không thể vừa lặp vừa xóa phần tử trong list/group)
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
-        # In ra số lượng đạn để debug (xóa dòng này sau khi test xong)
-        # print(len(self.bullets))
+        # --- CODE MỚI: XỬ LÝ VA CHẠM (COLLISION) ---
+        self._check_bullet_alien_collisions()
+        # -------------------------------------------
+
+    # --- THÊM HÀM MỚI NÀY VÀO DƯỚI CÙNG HOẶC GẦN CÁC HÀM UPDATE ---
+    def _check_bullet_alien_collisions(self):
+        """Xử lý va chạm giữa đạn và alien"""
+        # Hàm groupcollide kiểm tra va chạm giữa 2 nhóm (bullets và aliens)
+        # True thứ nhất: Xóa đạn khi va chạm? -> Có (True)
+        # True thứ hai: Xóa Alien khi va chạm? -> Có (True)
+        collisions = pygame.sprite.groupcollide(
+                self.bullets, self.aliens, True, True)
+
+        # Nếu hạm đội bị diệt sạch -> Tạo hạm đội mới
+        if not self.aliens:
+            # Xóa hết đạn đang bay (tùy chọn)
+            self.bullets.empty()
+            # Tạo hạm đội mới
+            self._create_fleet()
 
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
