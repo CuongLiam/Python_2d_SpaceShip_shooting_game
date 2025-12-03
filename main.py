@@ -1,12 +1,16 @@
 import sys
 import pygame
+"""
+Alien Invasion Ultimate - Main Game File
+This file contains the main game loop, event handling, menu logic, and core gameplay mechanics.
+"""
 from time import sleep
 
 from settings import Settings, get_resource_path
 from game_stats import GameStats
 from scoreboard import Scoreboard
 from button import Button
-from slider import Slider  # <--- MỚI: Import Slider
+from slider import Slider
 from sprites.ship import Ship
 from sprites.bullet import Bullet
 from sprites.alien import Alien

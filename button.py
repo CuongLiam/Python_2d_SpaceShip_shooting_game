@@ -1,6 +1,13 @@
+"""
+Button UI class for Alien Invasion Ultimate.
+Handles rendering and interaction for menu and game buttons.
+"""
 import pygame.font
 
 class Button:
+    """
+    UI Button for menus and game controls.
+    """
     def __init__(self, ai_game, msg):
         """Khởi tạo các thuộc tính của nút bấm."""
         self.screen = ai_game.screen

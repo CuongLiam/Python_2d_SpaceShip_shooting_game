@@ -1,7 +1,14 @@
+"""
+Slider UI class for Alien Invasion Ultimate.
+Handles volume control in menus.
+"""
 import pygame
 
 
 class Slider:
+    """
+    UI Slider for volume control.
+    """
     def __init__(self, ai_game, x, y, width, height, initial_value):
         """Khởi tạo thanh trượt."""
         self.screen = ai_game.screen

@@ -1,4 +1,12 @@
+"""
+Game statistics tracking for Alien Invasion Ultimate.
+Tracks score, level, lives, and high score.
+"""
+
 class GameStats:
+    """
+    Tracks game statistics: score, level, lives, high score.
+    """
     """Theo dõi các thống kê của game Alien Invasion."""
 
     def __init__(self, ai_game):

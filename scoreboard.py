@@ -2,7 +2,15 @@ import pygame.font
 from pygame.sprite import Group
 from sprites.ship import Ship
 
+"""
+Scoreboard UI for Alien Invasion Ultimate.
+Displays score, high score, level, and lives.
+"""
+
 class Scoreboard:
+    """
+    Handles rendering of score, high score, level, and lives.
+    """
     """Class để báo cáo thông tin điểm số."""
 
     def __init__(self, ai_game):

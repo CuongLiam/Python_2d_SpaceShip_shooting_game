@@ -1,13 +1,12 @@
 import pygame
-from pygame.sprite import Sprite  # <--- 1. THÊM DÒNG NÀY
+from pygame.sprite import Sprite
 from settings import get_resource_path
 
 
-class Ship(Sprite):  # <--- 2. SỬA THÀNH Ship(Sprite)
+class Ship(Sprite):
     def __init__(self, ai_game):
         """Khởi tạo tàu và vị trí ban đầu"""
-        super().__init__()  # <--- 3. THÊM DÒNG NÀY (QUAN TRỌNG)
-
+        super().__init__()
         self.screen = ai_game.screen
         self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()

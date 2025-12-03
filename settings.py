@@ -1,3 +1,7 @@
+"""
+Settings and configuration for Alien Invasion Ultimate.
+Handles screen, difficulty, speed, and audio settings.
+"""
 import os
 import sys
 
@@ -9,6 +13,9 @@ def get_resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 class Settings:
+    """
+    Stores all game settings and handles difficulty changes.
+    """
     """Lưu trữ mọi cài đặt của game"""
 
     def __init__(self):
